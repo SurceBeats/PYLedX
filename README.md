@@ -1,5 +1,5 @@
 # PYLedX
-Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example
+Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Script
 
 # Installation guide:
 -------------------
