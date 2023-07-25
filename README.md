@@ -3,7 +3,7 @@ Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example
 
 # Installation guide:
 -------------------
-0.   Make sure you followed all steps in https://wiki.52pi.com/index.php?title=ZP-0128 to make it work
+0.   Make sure you followed all steps in https://wiki.52pi.com/index.php?title=ZP-0128 to make it work first
 1.   Run "sudo pip install rpi_ws281x"
 2.   Test the pyledx.py script by running sudo python3 pyledx.py
 3.   Play with the flags (-c, --white, --purple, etc...)
