@@ -12,7 +12,7 @@ from rpi_ws281x import PixelStrip, Color
 import argparse
 
 # NeoPixel LED strip configuration
-LED_COUNT = 16              # Number of LEDs in the strip
+LED_COUNT = 4              # Number of LEDs in the strip
 LED_PIN = 18                # GPIO pin to which the LED strip is connected
 LED_FREQ_HZ = 800000        # Data transmission frequency for the LED strip
 LED_DMA = 10                # DMA channel to be used for generating signal (Direct Memory Access)
@@ -21,7 +21,7 @@ LED_INVERT = False          # Invert signal if needed (True or False)
 LED_CHANNEL = 0             # PWM channel for generating signal (0 to 1)
 
 # Print usage information and available color options for the LEDs
-print("")
+print("")  # Print an empty line for formatting
 print('Use -c flag to clear colors on exit while testing to avoid freezes')
 print("")
 print('Use the following flags for static color:')
@@ -48,30 +48,25 @@ def colorWipe(strip, color, wait_ms=50):
     strip.show()
     time.sleep(wait_ms / 1000.0)
 
-# Function to create a rainbow animation on the strip
+# Function to create a rainbow animation on the strip with 4 LEDs
 def rainbow(strip, wait_ms=20, iterations=1):
     for j in range(256 * iterations):
         for i in range(strip.numPixels()):
-            strip.setPixelColor(i, wheel((i + j) & 255))
+            # Scale the index for 4 LEDs and the color palette for it to work correctly
+            scaled_index = int(i * 256 / 4 / strip.numPixels()) + j
+            strip.setPixelColor(i, wheel(scaled_index & 255))
         strip.show()
-        time.sleep(wait_ms / 1000.0)
+        time.sleep(wait_ms / 1000.0)  # Increase the value of wait_ms to slow down the animation
 
-# Function to create a rainbow cycle animation on the strip
+# Function to create a rainbow cycle animation on the strip with 4 LEDs
 def rainbowCycle(strip, wait_ms=20, iterations=5):
     for j in range(256 * iterations):
         for i in range(strip.numPixels()):
-            strip.setPixelColor(i, wheel((int(i * 256 / strip.numPixels()) + j) & 255))
+            # Scale the index for 4 LEDs and the color palette for it to work correctly
+            scaled_index = int(i * 256 / 4 / strip.numPixels()) + j
+            strip.setPixelColor(i, wheel(scaled_index & 255))
         strip.show()
-        time.sleep(wait_ms / 1000.0)
-
-# Function to create a theater chase rainbow animation on the strip
-def theaterChaseRainbow(strip, wait_ms=50):
-    for j in range(256):
-        for q in range(3):
-            for i in range(0, strip.numPixels(), 3):
-                strip.setPixelColor(i + q, wheel((i + j) % 255))
-        strip.show()
-        time.sleep(wait_ms / 1000.0)
+        time.sleep(wait_ms / 1000.0)  # Increase the value of wait_ms to slow down the animation
 
 # Function to create a fading animation on the strip with a given color
 def fadeAnimation(strip, color, duration=None, steps=100):
@@ -218,8 +213,6 @@ if __name__ == '__main__':
                 rainbow(strip, wait_ms=20, iterations=1)
                 time.sleep(1)
                 rainbowCycle(strip, wait_ms=20, iterations=5)
-                time.sleep(1)
-                theaterChaseRainbow(strip, wait_ms=50)
                 time.sleep(1)
 
     except KeyboardInterrupt:
