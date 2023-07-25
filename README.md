@@ -14,20 +14,32 @@ Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example
 6.   Disable minitower_moodlight.service by using the following command
    
           sudo systemctl disable minitower_moodlight.service
-7.   Modify the ExecStart from service minitower_moodlight.service
+
+7.   STOP minitower_moodlight.service by using the following command
+   
+          sudo systemctl stop minitower_moodlight.service
+
+8.   Modify the ExecStart from service minitower_moodlight.service
    
           sudo nano /lib/systemd/system/minitower_moodlight.service
-8.   Comment the line ExecStart=sudo /usr/bin/moodlight & with an # before
-9.   Add the following ExecStart instead
+9.   Comment the line ExecStart=sudo /usr/bin/moodlight & with an # before
+10.   Add the following ExecStart instead
 
           ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py &'
-10.  Enable minitower_moodlight.service by using the following command
+11.  Enable minitower_moodlight.service by using the following command
 
           sudo systemctl enable minitower_moodlight.service
-11.  Reboot to confirm it's working and enjoy!
+12.  Reboot to confirm it's working and enjoy!
 
 * You can also play with ExecStart by using:
 
-          ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py --purple -c &'
+          ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py -c --purple -c &'
      
-          ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py --white -c &'
+          ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py -c --white &'
+
+          ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py -c --purple --pulsate --pulsatevelocity 0.5 &'
+
+          ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py -c --complex_universe &'
+
+          ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py -c --complex_hellsgate &'
+
