@@ -23,7 +23,7 @@ Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example
 
           sudo python3 pyledx.py -h
           *Make sure you've stopped the minitower_moodlight.service before playing with
-          the script or it may throw buggy results in the leds and could eventually freeze
+          the script or it may throw buggy results in the leds and could eventually freeze or hang them
 8.   Modify the ExecStart from service minitower_moodlight.service
    
           sudo nano /lib/systemd/system/minitower_moodlight.service
