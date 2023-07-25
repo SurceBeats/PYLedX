@@ -1,4 +1,4 @@
-![alt text]([http://url/to/img.png](https://i.imgur.com/bkz2MhD.png))
+![alt text](https://github.com/SurceBeats/PYLedX/blob/main/pyledx.png?raw=true)
 
 # PYLedX
 Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Script
