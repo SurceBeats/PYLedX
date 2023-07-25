@@ -38,9 +38,7 @@ print("")
 print('Use ' + '\x1B[4m' + '--pulsate' + '\x1B[0m' + ' flag for pulsating LEDs (works combined ie: --purple --pulsate)')
 print('When using --pulsate, use ' + '\x1B[4m' + '--pulsatevelocity' + '\x1B[0m' + ' followed by a number to modify pulsate velocity')
 print("")
-print('Use ' + '\x1B[4m' + '--circle' + '\x1B[0m' + ' flag to make a circle animation between two colors')
-print("")
-print('Use the command without color flags to roll between all available colors')
+print('Use ' + '\x1B[4m' + '--circle' + '\x1B[0m' + ' flag to make a circle animation between all available colors')
 print("")
 print('\x1B[4m' + 'Examples:' + '\x1B[0m')
 print('sudo python3 pyledx.py -c')
@@ -48,6 +46,7 @@ print('sudo python3 pyledx.py -c --red')
 print('sudo python3 pyledx.py -c --purple --pulsate')
 print('sudo python3 pyledx.py -c --white --pulsate --pulsatevelocity 0.1')
 print('sudo python3 pyledx.py -c --blue --pulsate --pulsatevelocity 16')
+print('sudo python3 pyledx.py -c --circle')
 print('sudo python3 pyledx.py -c --complex_hellsgate')
 print("")
 print('\x1B[4m' + 'Complex animations available:' + '\x1B[0m')
@@ -281,6 +280,7 @@ if __name__ == '__main__':
     # Command-line argument parsing
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+    parser.add_argument('--circle', action='store_true', help='show rainbow all colors animation')
     parser.add_argument('--red', action='store_true', help='show red animation')
     parser.add_argument('--green', action='store_true', help='show green animation')
     parser.add_argument('--blue', action='store_true', help='show blue animation')
@@ -367,6 +367,20 @@ if __name__ == '__main__':
                     colorWipe(strip, Color(16, 16, 16))
             elif args.off:
                 colorWipe(strip, Color(0, 0, 0))
+
+            elif args.circle:
+                if args.pulsate:
+                    print("!!! --circle flag doesn't accept --pulsate requests")
+                    print("")
+                    rainbow(strip, wait_ms=20, iterations=1)
+                    time.sleep(1)
+                    rainbowCycle(strip, wait_ms=20, iterations=5)
+                    time.sleep(1)
+                else:
+                    rainbow(strip, wait_ms=20, iterations=1)
+                    time.sleep(1)
+                    rainbowCycle(strip, wait_ms=20, iterations=5)
+                    time.sleep(1)
 
             elif args.complex_universe:
                 if args.pulsate:
