@@ -22,7 +22,7 @@ Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example
 8.   Modify the ExecStart from service minitower_moodlight.service
    
           sudo nano /lib/systemd/system/minitower_moodlight.service
-9.   Comment the line ExecStart=sudo /usr/bin/moodlight & with an # before ExecStar, like this #ExecStart
+9.   Comment the line ExecStart=sudo /usr/bin/moodlight & with an # before ExecStart, like this #ExecStart
 10.   Add the following ExecStart instead
 
           ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py &'
