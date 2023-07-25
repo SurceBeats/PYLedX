@@ -28,6 +28,6 @@ Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example
 
 * You can also play with ExecStart by using:
 
-     ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py --purple -c &'
+               ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py --purple -c &'
      
-     ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py --white -c &'
+               ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py --white -c &'
