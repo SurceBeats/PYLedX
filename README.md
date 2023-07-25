@@ -7,21 +7,20 @@ Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Script
 -------------------
 0.   Make sure you followed all steps in https://wiki.52pi.com/index.php?title=ZP-0128 to make it work first
 1.   Run "sudo pip install rpi_ws281x"
-2.   Test the pyledx.py script by running sudo python3 pyledx.py
-3.   Play with the flags (-c, --white, --purple, etc...)
-4.   Confirm it's working
-5.   Place the pyledx.py file on a directory you'll remember, we'll use the following path
+2.   Place the pyledx.py file on a directory you'll remember, we'll use the following path
 
           /home/surce/pyledx.py
-6.   Disable minitower_moodlight.service by using the following command
+3.   Disable minitower_moodlight.service by using the following command
    
           sudo systemctl disable minitower_moodlight.service
 
-7.   STOP minitower_moodlight.service by using the following command
+4.   STOP minitower_moodlight.service by using the following command
    
           sudo systemctl stop minitower_moodlight.service
 
-8.   Find a color option which suits your needs by looking at the help dialog by typing
+5.   Test the pyledx.py script by running sudo python3 pyledx.py -c --white
+6.   Confirm it's working
+7.   Find a color option which suits your needs by looking at the help dialog by typing
 
           sudo python3 pyledx.py -h
 
