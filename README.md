@@ -19,6 +19,10 @@ Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example
    
           sudo systemctl stop minitower_moodlight.service
 
+8.   Find a color option which suits your needs by looking at the help dialog by typing
+
+          sudo python3 pyledx.py -h
+          *Make sure you've stopped the minitower_moodlight.service before playing with the script or it may throw buggy results and eventually freeze
 8.   Modify the ExecStart from service minitower_moodlight.service
    
           sudo nano /lib/systemd/system/minitower_moodlight.service
