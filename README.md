@@ -22,9 +22,9 @@ Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example
 
           ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py &'
 10.  Enable minitower_moodlight.service by using the following command
-11.  
+
           sudo systemctl enable minitower_moodlight.service
-12.  Reboot to confirm it's working and enjoy!
+11.  Reboot to confirm it's working and enjoy!
 
 PS:  You can also play with ExecStart by using:
 
