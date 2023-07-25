@@ -27,6 +27,7 @@ Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Script
 
           *Make sure you've stopped the minitower_moodlight.service before playing with
           the script or it may throw buggy results in the leds and could eventually freeze or hang them
+          until next restart, if you've experienced this issue then reboot and start again
 8.   Modify the ExecStart from service minitower_moodlight.service
    
           sudo nano /lib/systemd/system/minitower_moodlight.service
