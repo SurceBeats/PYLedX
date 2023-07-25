@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# ABSMiniTowerKit Custom Color Python Example
+# Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example
 # Author: Surce (surcebeats.com)
 # Based on the work from: Tony DiCola (tony@tonydicola.com)
 #
@@ -22,24 +22,38 @@ LED_CHANNEL = 0             # PWM channel for generating signal (0 to 1)
 
 # Print usage information and available color options for the LEDs
 print("")  # Print an empty line for formatting
-print('Use -c flag to clear colors on exit while testing to avoid freezes')
+print("Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example")
+print("Author: Surce (surcebeats.com)")
+print("Based on the work from: Tony DiCola (tony@tonydicola.com)")
+print("")
+print("---------------------------------------")
+print("")
+print('\x1B[4m' + 'Usage:' + '\x1B[0m')
+print('Use ' + '\x1B[4m' + '-c' + '\x1B[0m' + ' flag to clear colors on exit while testing to avoid freezes')
 print("")
 print('Use the following flags for static color:')
 print('--red --green --blue --yellow --cyan --limegreen --gray --purple')
 print('--orange --pink --white --off ')
 print("")
-print('Use --pulsate flag for pulsating LEDs (works combined ie: --purple --pulsate)')
-print('When using --pulsate, use --pulsatevelocity 4 to modify pulsate velocity')
+print('Use ' + '\x1B[4m' + '--pulsate' + '\x1B[0m' + ' flag for pulsating LEDs (works combined ie: --purple --pulsate)')
+print('When using --pulsate, use ' + '\x1B[4m' + '--pulsatevelocity' + '\x1B[0m' + ' followed by a number to modify pulsate velocity')
+print("")
+print('Use ' + '\x1B[4m' + '--circle' + '\x1B[0m' + ' flag to make a circle animation between two colors')
 print("")
 print('Use the command without color flags to roll between all available colors')
 print("")
-print('Examples:')
+print('\x1B[4m' + 'Examples:' + '\x1B[0m')
 print('sudo python3 pyledx.py -c')
 print('sudo python3 pyledx.py -c --red')
 print('sudo python3 pyledx.py -c --purple --pulsate')
 print('sudo python3 pyledx.py -c --white --pulsate --pulsatevelocity 0.1')
 print('sudo python3 pyledx.py -c --blue --pulsate --pulsatevelocity 16')
+print('sudo python3 pyledx.py -c --complex_hellsgate')
 print("")
+print('\x1B[4m' + 'Complex animations available:' + '\x1B[0m')
+print('--complex_universe, --complex_galaxy, --complex_radioactive, --complex_hellsgate')
+print('--complex_scientist, --complex_raspberrypi')
+print('')
 
 # Function to set a single color for all LEDs in the strip
 def colorWipe(strip, color, wait_ms=50):
@@ -67,6 +81,145 @@ def rainbowCycle(strip, wait_ms=20, iterations=5):
             strip.setPixelColor(i, wheel(scaled_index & 255))
         strip.show()
         time.sleep(wait_ms / 1000.0)  # Increase the value of wait_ms to slow down the animation
+
+# Function to smoothly interpolate between two colors
+def interpolate_color(color1, color2, steps):
+    r1, g1, b1 = (color1 >> 16) & 255, (color1 >> 8) & 255, color1 & 255
+    r2, g2, b2 = (color2 >> 16) & 255, (color2 >> 8) & 255, color2 & 255
+
+    colors = []
+    for step in range(steps):
+        # Calculate the percentage of completion for both "fade in" and "fade out" parts
+        fade_in_progress = abs(2 * step - steps) / steps
+        r_val = int(r1 + (r2 - r1) * fade_in_progress)
+        g_val = int(g1 + (g2 - g1) * fade_in_progress)
+        b_val = int(b1 + (b2 - b1) * fade_in_progress)
+        colors.append(Color(r_val, g_val, b_val))
+
+    return colors
+
+# Function to create an animation that alternates between two colors (purple and pink) in a circular pattern
+def cycleUniverse(strip, wait_ms=20, iterations=5):
+    color1 = Color(128, 0, 128)    # Purple color
+    color2 = Color(255, 0, 120)    # Pink color
+    fade_steps = 50  # Number of steps for the fade effect
+
+    while True:
+        for j in range(256 * iterations):
+            for i in range(strip.numPixels()):
+                # Calculate the index for each LED based on the current iteration and number of LEDs
+                led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
+                # Alternate between the colors based on the LED index
+                color = interpolate_color(color1, color2, fade_steps)[led_index]
+                strip.setPixelColor(i, color)
+            strip.show()
+            time.sleep(wait_ms / 1000.0)  # Increase the value of wait_ms to slow down the animation
+
+# Function to create an animation that alternates between two colors (blue and cyan) in a circular pattern - For my brother Anghios <3
+def cycleGalaxy(strip, wait_ms=20, iterations=5):
+    color1 = Color(0, 0, 255)    # Blue color
+    color2 = Color(0, 255, 255)  # Cyan color
+    fade_steps = 50  # Number of steps for the fade effect
+
+    while True:
+        for j in range(256 * iterations):
+            for i in range(strip.numPixels()):
+                # Calculate the index for each LED based on the current iteration and number of LEDs
+                led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
+                # Alternate between the colors based on the LED index
+                color = interpolate_color(color1, color2, fade_steps)[led_index]
+                strip.setPixelColor(i, color)
+            strip.show()
+            time.sleep(wait_ms / 1000.0)  # Increase the value of wait_ms to slow down the animation
+
+# Function to create an animation that alternates between two colors (orange and yellow) in a circular pattern
+def cycleRadioactive(strip, wait_ms=20, iterations=5):
+    color1 = Color(255, 69, 0)   # Orange color
+    color2 = Color(255, 255, 0)  # Yellow color
+    fade_steps = 50  # Number of steps for the fade effect
+
+    while True:
+        for j in range(256 * iterations):
+            for i in range(strip.numPixels()):
+                # Calculate the index for each LED based on the current iteration and number of LEDs
+                led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
+                # Alternate between the colors based on the LED index
+                color = interpolate_color(color1, color2, fade_steps)[led_index]
+                strip.setPixelColor(i, color)
+            strip.show()
+            time.sleep(wait_ms / 1000.0)  # Increase the value of wait_ms to slow down the animation
+
+# Function to create an animation that alternates between two colors (red and gray) in a circular pattern
+def cycleHellsgate(strip, wait_ms=20, iterations=5):
+    color1 = Color(255, 0, 0)   # Red color
+    color2 = Color(16, 16, 16)  # Gray color
+    fade_steps = 50  # Number of steps for the fade effect
+
+    while True:
+        for j in range(256 * iterations):
+            for i in range(strip.numPixels()):
+                # Calculate the index for each LED based on the current iteration and number of LEDs
+                led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
+                # Alternate between the colors based on the LED index
+                if led_index < fade_steps // 2:
+                    color = interpolate_color(color1, color2, fade_steps // 2)[led_index]
+                else:
+                    color = interpolate_color(color2, color1, fade_steps // 2)[led_index - fade_steps // 2]
+                strip.setPixelColor(i, color)
+            strip.show()
+            time.sleep(wait_ms / 1000.0)  # Increase the value of wait_ms to slow down the animation
+
+# Function to create an animation that alternates between two colors (green and yellow) in a circular pattern
+def complexScientist(strip, wait_ms=20, iterations=5):
+    color1 = Color(0, 255, 0)    # Green color
+    color2 = Color(255, 255, 0)  # Yellow color
+    fade_steps = 50  # Number of steps for the fade effect
+
+    while True:
+        for j in range(256 * iterations):
+            for i in range(strip.numPixels()):
+                # Calculate the index for each LED based on the current iteration and number of LEDs
+                led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
+                # Alternate between the colors based on the LED index
+                if led_index < fade_steps // 2:
+                    color = interpolate_color(color1, color2, fade_steps // 2)[led_index]
+                else:
+                    color = interpolate_color(color2, color1, fade_steps // 2)[led_index - fade_steps // 2]
+                strip.setPixelColor(i, color)
+            strip.show()
+            time.sleep(wait_ms / 1000.0)  # Increase the value of wait_ms to slow down the animation
+
+def complexRaspberryPI(strip, wait_ms=20, iterations=5):
+    color1 = Color(255, 0, 120)  # Pink color
+    color2 = Color(255, 0, 0)    # Red color
+    fade_steps = 50  # Number of steps for the fade effect
+
+    while True:
+        for j in range(256 * iterations):
+            for i in range(strip.numPixels()):
+                # Calculate the index for each LED based on the current iteration and number of LEDs
+                led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
+                # Alternate between the colors based on the LED index
+                if led_index < fade_steps // 2:
+                    color = interpolate_color(color1, color2, fade_steps // 2)[led_index]
+                else:
+                    color = interpolate_color(color2, color1, fade_steps // 2)[led_index - fade_steps // 2]
+                strip.setPixelColor(i, color)
+            strip.show()
+            time.sleep(wait_ms / 1000.0)  # Increase the value of wait_ms to slow down the animation
+
+
+def rainbowCircle(strip, wait_ms=20, iterations=1):
+    for j in range(256 * iterations):
+        for i in range(strip.numPixels()):
+            scaled_index = int(i * 256 / 4 / strip.numPixels()) + j
+            color = wheel(scaled_index & 255)
+            if color == Color(0, 0, 255) or color == Color(255, 0, 0):
+                strip.setPixelColor(i, color)
+            else:
+                strip.setPixelColor(i, Color(0, 0, 0))
+        strip.show()
+        time.sleep(wait_ms / 1000.0)
 
 # Function to create a fading animation on the strip with a given color
 def fadeAnimation(strip, color, duration=None, steps=100):
@@ -142,6 +295,12 @@ if __name__ == '__main__':
     parser.add_argument('--off', action='store_true', help='turn off LEDs')
     parser.add_argument('--pulsate', action='store_true', help='pulsate LEDs')
     parser.add_argument('--pulsatevelocity', type=float, default=2, help='pulsate velocity in seconds (default is 2)')
+    parser.add_argument('--complex_universe', action='store_true', help='cycle between purple and pink only (Universe effect - Surce)')
+    parser.add_argument('--complex_galaxy', action='store_true', help='cycle between blue and cyan only (Galaxy effect - Anghios)')
+    parser.add_argument('--complex_radioactive', action='store_true', help='cycle between orange and yellow only (Radioactive effect)')
+    parser.add_argument('--complex_hellsgate', action='store_true', help='cycle between red and gray (Hellsgate effect)')
+    parser.add_argument('--complex_scientist', action='store_true', help='cycle between green and yellow (Complex Scientist effect)')
+    parser.add_argument('--complex_raspberrypi', action='store_true', help='cycle between pink and red (Complex RaspberryPI effect)')
     args = parser.parse_args()
 
     # Initialize the NeoPixel strip
@@ -208,6 +367,57 @@ if __name__ == '__main__':
                     colorWipe(strip, Color(16, 16, 16))
             elif args.off:
                 colorWipe(strip, Color(0, 0, 0))
+
+            elif args.complex_universe:
+                if args.pulsate:
+                    print("!!! --complex_universe flag doesn't accept --pulsate requests")
+                    print("")
+                    cycleUniverse(strip, wait_ms=20, iterations=5)
+                else:
+                    cycleUniverse(strip, wait_ms=20, iterations=5)
+
+            elif args.complex_galaxy:
+                if args.pulsate:
+                    print("!!! --complex_galaxy flag doesn't accept --pulsate requests")
+                    print("")
+                    cycleGalaxy(strip, wait_ms=20, iterations=5)
+                else:
+                    cycleGalaxy(strip, wait_ms=20, iterations=5)
+
+            elif args.complex_radioactive:
+                if args.pulsate:
+                    print("!!! --complex_radioactive flag doesn't accept --pulsate requests")
+                    print("")
+                    cycleRadioactive(strip, wait_ms=50, iterations=5)
+                else:
+                    cycleRadioactive(strip, wait_ms=50, iterations=5)
+
+            elif args.complex_hellsgate:
+                if args.pulsate:
+                    print("!!! --complex_hellsgate flag doesn't accept --pulsate requests")
+                    print("")
+                    cycleHellsgate(strip, wait_ms=100, iterations=5)
+                else:
+                    cycleHellsgate(strip, wait_ms=100, iterations=5)
+
+            elif args.complex_scientist:
+                if args.pulsate:
+                    print("!!! --complex_scientist flag doesn't accept --pulsate requests")
+                    print("")
+                    complexScientist(strip, wait_ms=45, iterations=5)
+                else:
+                    complexScientist(strip, wait_ms=45, iterations=5)
+
+            elif args.complex_raspberrypi:
+                if args.pulsate:
+                    print("!!! --complex_raspberrypi flag doesn't accept --pulsate requests")
+                    print("")
+                    complexRaspberryPI(strip, wait_ms=20, iterations=5)
+                else:
+                    complexRaspberryPI(strip, wait_ms=20, iterations=5)
+
+
+
             else:
                 # If no specific color flag is provided, run a sequence of default animations
                 rainbow(strip, wait_ms=20, iterations=1)
