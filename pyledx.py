@@ -61,6 +61,12 @@ def colorWipe(strip, color, wait_ms=50):
     strip.show()
     time.sleep(wait_ms / 1000.0)
 
+# Function to blink all LEDs with white color three times for one second each
+def blinkTest(strip):
+    for _ in range(5):  # Blink 5 times
+        colorWipe(strip, Color(255, 255, 255), 100)  # White color, 100ms delay
+        colorWipe(strip, Color(0, 0, 0), 100)        # Turn off, 100ms delay
+
 # Function to create a rainbow animation on the strip with 4 LEDs
 def rainbow(strip, wait_ms=20, iterations=1):
     for j in range(256 * iterations):
@@ -280,6 +286,7 @@ if __name__ == '__main__':
     # Command-line argument parsing
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+    parser.add_argument('--test', action='store_true', help='test the script and led system')
     parser.add_argument('--circle', action='store_true', help='show rainbow all colors animation')
     parser.add_argument('--red', action='store_true', help='show red animation')
     parser.add_argument('--green', action='store_true', help='show green animation')
@@ -367,6 +374,11 @@ if __name__ == '__main__':
                     colorWipe(strip, Color(16, 16, 16))
             elif args.off:
                 colorWipe(strip, Color(0, 0, 0))
+            elif args.test:
+                blinkTest(strip)
+                print("!!! If the leds blinked in white 5 times it means it is working")
+                print("")
+                break
 
             elif args.circle:
                 if args.pulsate:
@@ -429,8 +441,6 @@ if __name__ == '__main__':
                     complexRaspberryPI(strip, wait_ms=20, iterations=5)
                 else:
                     complexRaspberryPI(strip, wait_ms=20, iterations=5)
-
-
 
             else:
                 # If no specific color flag is provided, run a sequence of default animations
