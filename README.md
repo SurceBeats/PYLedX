@@ -18,26 +18,28 @@ Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Script
    
           sudo systemctl stop minitower_moodlight.service
 
-5.   Test the pyledx.py script by running sudo python3 pyledx.py -c --white
-6.   Confirm it's working
-7.   Find a color option which suits your needs by looking at the help dialog by typing
+5.   Test the pyledx.py script by running the following command
+
+          sudo python3 pyledx.py -c --test
+7.   Confirm it's working
+8.   Find a color option which suits your needs by looking at the help dialog by typing
 
           sudo python3 pyledx.py -h
 
           *Make sure you've stopped the minitower_moodlight.service before playing with
           the script or it may throw buggy results in the leds and could eventually freeze or hang them
           until next restart, if you've experienced this issue then reboot and start again
-8.   Modify the ExecStart from service minitower_moodlight.service
+9.   Modify the ExecStart from service minitower_moodlight.service
    
           sudo nano /lib/systemd/system/minitower_moodlight.service
-9.   Comment the line ExecStart=sudo /usr/bin/moodlight & with an # before ExecStart, like this #ExecStart
-10.   Add the following ExecStart instead
+10.   Comment the line ExecStart=sudo /usr/bin/moodlight & with an # before ExecStart, like this #ExecStart
+11.   Add the following ExecStart instead
 
           ExecStart=/bin/bash -c '/usr/bin/python3 /home/surce/pyledx.py &'
-11.  Enable minitower_moodlight.service by using the following command
+12.  Enable minitower_moodlight.service by using the following command
 
           sudo systemctl enable minitower_moodlight.service
-12.  Reboot to confirm it's working and enjoy!
+13.  Reboot to confirm it's working and enjoy!
 
 * You can also play with ExecStart by using:
 
