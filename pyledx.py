@@ -356,7 +356,7 @@ def wheel(pos):
         pos -= 170
         return Color(0, pos * 3, 255 - pos * 3)
 
-# Define las opciones de animación de color
+# Define the color animation options
 color_animations = {
     'red': 'show red color',
     'green': 'show green color',
@@ -372,7 +372,7 @@ color_animations = {
     'deepgray': 'show deepgray color'
 }
 
-# Define las opciones de animación compleja
+# Define the complex animation options
 complex_animations = {
     'universe': 'cycle between purple and pink only (Universe effect - Surce)',
     'galaxy': 'cycle between blue and cyan only (Galaxy effect - Anghios)',
@@ -387,7 +387,7 @@ if __name__ == '__main__':
     # Command-line argument parsing
     parser = argparse.ArgumentParser()
 
-    # Agrega las opciones adicionales al parser
+    # Add the additional options to the parser
     parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
     parser.add_argument('--test', action='store_true', help='test the script and led system')
     parser.add_argument('--circle', action='store_true', help='show rainbow all colors animation')
@@ -398,7 +398,7 @@ if __name__ == '__main__':
     for color_arg, help_text in color_animations.items():
         parser.add_argument(f'--{color_arg}', action='store_true', help=help_text)
 
-    # Agrega las opciones de animación compleja al parser
+    # Add the complex animation options to the parser
     for complex_arg, help_text in complex_animations.items():
         parser.add_argument(f'--complex_{complex_arg}', action='store_true', help=help_text)
 
@@ -461,7 +461,7 @@ try:
                     break
             else:
                 complex_args = ['universe', 'galaxy', 'uranium', 'hellsgate', 'scientist', 'raspberry', 'mcportal']
-                complex_found = False  # Variable de control para indicar si se encontró un complex_arg válido
+                complex_found = False  # Control variable to indicate if a valid complex_arg was found
 
                 for complex_arg in complex_args:
                     if getattr(args, f'complex_{complex_arg}'):
@@ -477,12 +477,12 @@ try:
                         if args.pulsate:
                             print(f"!!! --complex_{complex_arg} flag doesn't accept --pulsate requests, running --circle instead...")
                             print("")
-                            complex_found = True  # Establecer la variable de control en True para indicar una coincidencia
+                            complex_found = True  # Set the control variable to True to indicate a match
                             break
                         elif args.rotate:
                             print(f"!!! --complex_{complex_arg} flag doesn't accept --rotate requests, running --circle instead...")
                             print("")
-                            complex_found = True  # Establecer la variable de control en True para indicar una coincidencia
+                            complex_found = True  # Set the control variable to True to indicate a match
                             break
                         else:
                             wait_ms_dict = {
@@ -495,10 +495,10 @@ try:
                                 'mcportal': 250
                             }
                             complex_func(strip, wait_ms=wait_ms_dict.get(complex_arg, 20), iterations=5)
-                            complex_found = True  # Establecer la variable de control en True para indicar una coincidencia
+                            complex_found = True  # Set the control variable to True to indicate a match
                             break
 
-                # Verificar si se encontró una coincidencia y si no, mostrar un mensaje de error
+                # Check if a match was found, and if not, display an error message
                 if not complex_found:
                     rainbow(strip, wait_ms=20, iterations=1)
                     time.sleep(1)
