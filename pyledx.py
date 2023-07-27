@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example
+# 52Pi ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example
 # Author: Surce (surcebeats.com)
 # Based on the work from: Tony DiCola (tony@tonydicola.com)
 #
@@ -22,7 +22,7 @@ LED_CHANNEL = 0             # PWM channel for generating signal (0 to 1)
 
 # Print usage information and available color options for the LEDs
 print("")  # Print an empty line for formatting
-print("Pi52 ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example")
+print("52Pi ZP-0128 ABSMiniTowerKit Ice Tower LED Fans Custom Color Python Example")
 print("Author: Surce (surcebeats.com)")
 print("Based on the work from: Tony DiCola (tony@tonydicola.com)")
 print("")
