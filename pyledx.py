@@ -45,6 +45,7 @@ print('sudo python3 pyledx.py -c --complex_hellsgate')
 print("")
 print('\x1B[4m' + 'Complex animations available:' + '\x1B[0m')
 print('--complex_universe, --complex_galaxy, --complex_uranium, --complex_hellsgate --complex_scientist, --complex_raspberry, --complex_mcportal')
+print("!Despite having been optimized, complex animations can still be somewhat CPU-intensive when looking at htop")
 print('')
 
 
