@@ -30,30 +30,21 @@ print("---------------------------------------")
 print("")
 print('\x1B[4m' + 'Usage:' + '\x1B[0m')
 print('Use ' + '\x1B[4m' + '-c' + '\x1B[0m' + ' flag to clear colors on exit while testing to avoid freezes')
-print("")
-print('Use the following flags for static color:')
-print('--red --green --blue --yellow --cyan --limegreen --gray --deepgray --purple')
-print('--orange --pink --white')
-print("")
-print('Use ' + '\x1B[4m' + '--pulsate' + '\x1B[0m' + ' flag for pulsating LEDs (works combined ie: --purple --pulsate)')
-print('When using --pulsate, use ' + '\x1B[4m' + '--pvel' + '\x1B[0m' + ' followed by a number to modify pulsate velocity')
-print("")
+print('Use ' + '\x1B[4m' + '--red' + '\x1B[0m \x1B[4m' + '--green\x1B[0m \x1B[4m--blue\x1B[0m \x1B[4m--yellow\x1B[0m \x1B[4m--cyan\x1B[0m \x1B[4m--limegreen\x1B[0m \x1B[4m--gray\x1B[0m \x1B[4m--deepgray\x1B[0m \x1B[4m--purple\x1B[0m \x1B[4m--orange\x1B[0m \x1B[4m--pink\x1B[0m \x1B[4m--white\x1B[0m for static colors')
+print('Use ' + '\x1B[4m' + '--pulsate' + '\x1B[0m' + ' flag for pulsating LEDs (works combined ie: --purple --pulsate, use also ' + '\x1B[4m' + '--pvel' + '\x1B[0m' + ' % to modify velocity)')
 print('Use ' + '\x1B[4m' + '--rotate' + '\x1B[0m' + ' flag to rotate color through LEDs (works combined ie: --purple --rotate)')
-print("")
 print('Use ' + '\x1B[4m' + '--circle' + '\x1B[0m' + ' flag to make a circle animation between all available colors')
 print("")
 print('\x1B[4m' + 'Examples:' + '\x1B[0m')
-print('sudo python3 pyledx.py -c')
 print('sudo python3 pyledx.py -c --red')
 print('sudo python3 pyledx.py -c --purple --pulsate')
-print('sudo python3 pyledx.py -c --white --pulsate --pvel 0.1')
-print('sudo python3 pyledx.py -c --blue --pulsate --pvel 16')
+print('sudo python3 pyledx.py -c --white --pulsate --pvel 0.5 (default is 2)')
+print('sudo python3 pyledx.py -c --limegreen --rotate')
 print('sudo python3 pyledx.py -c --circle')
 print('sudo python3 pyledx.py -c --complex_hellsgate')
 print("")
 print('\x1B[4m' + 'Complex animations available:' + '\x1B[0m')
-print('--complex_universe, --complex_galaxy, --complex_uranium, --complex_hellsgate')
-print('--complex_scientist, --complex_raspberry, --complex_mcportal')
+print('--complex_universe, --complex_galaxy, --complex_uranium, --complex_hellsgate --complex_scientist, --complex_raspberry, --complex_mcportal')
 print('')
 
 
@@ -190,7 +181,7 @@ def cyclemcportal(strip, wait_ms=20, iterations=5):
 # Function to create an animation that alternates between two colors (purple and pink) in a circular pattern
 def cycleUniverse(strip, wait_ms=20, iterations=5):
     color1 = Color(128, 0, 128)    # Purple color
-    color2 = Color(255, 0, 120)    # Pink color
+    color2 = Color(255, 0, 60)    # Pink color
     fade_steps = 32  # Number of steps for the fade effect
 
     while True:
