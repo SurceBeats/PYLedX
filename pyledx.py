@@ -38,6 +38,8 @@ print("")
 print('Use ' + '\x1B[4m' + '--pulsate' + '\x1B[0m' + ' flag for pulsating LEDs (works combined ie: --purple --pulsate)')
 print('When using --pulsate, use ' + '\x1B[4m' + '--pvel' + '\x1B[0m' + ' followed by a number to modify pulsate velocity')
 print("")
+print('Use ' + '\x1B[4m' + '--rotate' + '\x1B[0m' + ' flag to rotate color through LEDs (works combined ie: --purple --rotate)')
+print("")
 print('Use ' + '\x1B[4m' + '--circle' + '\x1B[0m' + ' flag to make a circle animation between all available colors')
 print("")
 print('\x1B[4m' + 'Examples:' + '\x1B[0m')
@@ -53,6 +55,45 @@ print('\x1B[4m' + 'Complex animations available:' + '\x1B[0m')
 print('--complex_universe, --complex_galaxy, --complex_uranium, --complex_hellsgate')
 print('--complex_scientist, --complex_raspberry, --complex_mcportal')
 print('')
+
+
+def rotateAnimation(strip, color):
+    led_order = [3, 2, 1]  # LED order to create the desired sequence (modify as needed)
+    fade_steps = 40       # Number of steps for the fade effect
+
+    for _ in range(strip.numPixels()):
+        for i in led_order:
+            # Fade out the previous LED
+            for step in range(fade_steps):
+                fade_color = Color(int(((fade_steps - step) / fade_steps) * ((color >> 16) & 255)),
+                                   int(((fade_steps - step) / fade_steps) * ((color >> 8) & 255)),
+                                   int(((fade_steps - step) / fade_steps) * (color & 255)))
+                strip.setPixelColor(i, fade_color)
+                strip.show()
+                time.sleep(0.005)  # Faster fade-out
+
+            # Turn off the previous LED
+            strip.setPixelColor(i, Color(0, 0, 0))
+            strip.show()
+
+            # Fade in the next LED
+            for step in range(fade_steps):
+                fade_color = Color(int((step / fade_steps) * ((color >> 16) & 255)),
+                                   int((step / fade_steps) * ((color >> 8) & 255)),
+                                   int((step / fade_steps) * (color & 255)))
+                strip.setPixelColor(led_order[(led_order.index(i) + 1) % len(led_order)], fade_color)
+                strip.show()
+                time.sleep(0.005)  # Faster fade-in
+
+            # Turn on the next LED
+            strip.setPixelColor(led_order[(led_order.index(i) + 1) % len(led_order)], color)
+            strip.show()
+
+            time.sleep(0.005)  # Adjust the duration to control the speed of the animation
+
+        # Turn off the last LED
+        strip.setPixelColor(led_order[-1], Color(0, 0, 0))
+        strip.show()
 
 # Function to set a single color for all LEDs in the strip
 def colorWipe(strip, color, wait_ms=50):
@@ -125,10 +166,10 @@ def rainbowCycle(strip, wait_ms=20, iterations=5):
 # Function to create an animation that alternates between three colors (red, orange, and gray) in a circular pattern - Inferno Cycle
 def cyclemcportal(strip, wait_ms=20, iterations=5):
     colors = ['purple', 'pink', 'purple', 'pink', 'purple', 'deepgray']  # Colors to cycle through (gray added to the sequence)
-    fade_steps = 50  # Number of steps for the fade effect
+    fade_steps = 26  # Number of steps for the fade effect
 
     while True:
-        for j in range(256 * iterations):
+        for j in range(64 * iterations):
             for i in range(strip.numPixels()):
                 # Calculate the index for each LED based on the current iteration and number of LEDs
                 led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
@@ -150,10 +191,10 @@ def cyclemcportal(strip, wait_ms=20, iterations=5):
 def cycleUniverse(strip, wait_ms=20, iterations=5):
     color1 = Color(128, 0, 128)    # Purple color
     color2 = Color(255, 0, 120)    # Pink color
-    fade_steps = 50  # Number of steps for the fade effect
+    fade_steps = 32  # Number of steps for the fade effect
 
     while True:
-        for j in range(256 * iterations):
+        for j in range(64 * iterations):
             for i in range(strip.numPixels()):
                 # Calculate the index for each LED based on the current iteration and number of LEDs
                 led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
@@ -167,10 +208,10 @@ def cycleUniverse(strip, wait_ms=20, iterations=5):
 def cycleGalaxy(strip, wait_ms=20, iterations=5):
     color1 = Color(0, 0, 255)    # Blue color
     color2 = Color(0, 255, 255)  # Cyan color
-    fade_steps = 50  # Number of steps for the fade effect
+    fade_steps = 32  # Number of steps for the fade effect
 
     while True:
-        for j in range(256 * iterations):
+        for j in range(64 * iterations):
             for i in range(strip.numPixels()):
                 # Calculate the index for each LED based on the current iteration and number of LEDs
                 led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
@@ -184,10 +225,10 @@ def cycleGalaxy(strip, wait_ms=20, iterations=5):
 def cycleuranium(strip, wait_ms=20, iterations=5):
     color1 = Color(255, 69, 0)   # Orange color
     color2 = Color(255, 255, 0)  # Yellow color
-    fade_steps = 50  # Number of steps for the fade effect
+    fade_steps = 32  # Number of steps for the fade effect
 
     while True:
-        for j in range(256 * iterations):
+        for j in range(64 * iterations):
             for i in range(strip.numPixels()):
                 # Calculate the index for each LED based on the current iteration and number of LEDs
                 led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
@@ -201,10 +242,10 @@ def cycleuranium(strip, wait_ms=20, iterations=5):
 def cycleHellsgate(strip, wait_ms=20, iterations=5):
     color1 = Color(255, 0, 0)   # Red color
     color2 = Color(16, 16, 16)  # Gray color
-    fade_steps = 50  # Number of steps for the fade effect
+    fade_steps = 40  # Number of steps for the fade effect
 
     while True:
-        for j in range(256 * iterations):
+        for j in range(64 * iterations):
             for i in range(strip.numPixels()):
                 # Calculate the index for each LED based on the current iteration and number of LEDs
                 led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
@@ -221,10 +262,10 @@ def cycleHellsgate(strip, wait_ms=20, iterations=5):
 def complexScientist(strip, wait_ms=20, iterations=5):
     color1 = Color(0, 255, 0)    # Green color
     color2 = Color(255, 255, 0)  # Yellow color
-    fade_steps = 50  # Number of steps for the fade effect
+    fade_steps = 40  # Number of steps for the fade effect
 
     while True:
-        for j in range(256 * iterations):
+        for j in range(64 * iterations):
             for i in range(strip.numPixels()):
                 # Calculate the index for each LED based on the current iteration and number of LEDs
                 led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
@@ -240,10 +281,10 @@ def complexScientist(strip, wait_ms=20, iterations=5):
 def complexraspberry(strip, wait_ms=20, iterations=5):
     color1 = Color(255, 0, 120)  # Pink color
     color2 = Color(255, 0, 0)    # Red color
-    fade_steps = 50  # Number of steps for the fade effect
+    fade_steps = 36  # Number of steps for the fade effect
 
     while True:
-        for j in range(256 * iterations):
+        for j in range(64 * iterations):
             for i in range(strip.numPixels()):
                 # Calculate the index for each LED based on the current iteration and number of LEDs
                 led_index = (i * fade_steps // strip.numPixels() + j) % fade_steps
@@ -360,9 +401,9 @@ if __name__ == '__main__':
     parser.add_argument('--test', action='store_true', help='test the script and led system')
     parser.add_argument('--circle', action='store_true', help='show rainbow all colors animation')
     parser.add_argument('--pulsate', action='store_true', help='pulsate LEDs')
+    parser.add_argument('--rotate', action='store_true', help='run the sprint animation with the specified color')
     parser.add_argument('--pvel', type=float, default=2, help='pulsate velocity (default is 2)')
 
-    # Agrega las opciones de animación de color al parser
     for color_arg, help_text in color_animations.items():
         parser.add_argument(f'--{color_arg}', action='store_true', help=help_text)
 
@@ -384,12 +425,26 @@ try:
             print("")
             break
         elif args.circle and args.pulsate:
-            print("!!! --circle flag doesn't accept --pulsate requests")
+            message = "!!! --circle flag doesn't accept --pulsate requests, running --circle instead..."
+        elif args.pulsate and args.rotate:
+            message = "!!! --pulsate flag doesn't accept --rotate requests, running --circle instead..."
+        else:
+            message = None
+
+        if message:
+            print(message)
             print("")
             rainbow(strip, wait_ms=20, iterations=1)
             time.sleep(1)
             rainbowCycle(strip, wait_ms=20, iterations=5)
             time.sleep(1)
+
+        elif args.rotate and any(getattr(args, color_arg) for color_arg in color_animations):
+            sprint_color_arg = [color_arg for color_arg in color_animations if getattr(args, color_arg)][0]
+            sprint_color = get_color(sprint_color_arg)
+            while True:
+                rotateAnimation(strip, sprint_color)
+
         else:
             color_args = ['red', 'green', 'blue', 'yellow', 'cyan', 'purple', 'white', 'orange', 'pink', 'limegreen', 'gray', 'deepgray']
             for color_arg in color_args:
@@ -409,12 +464,14 @@ try:
                         'deepgray': Color(8, 8, 8),
                     }[color_arg]
                     if args.pulsate:
-                        fadeAnimation(strip, color, duration=args.pvel, steps=100)
+                        fadeAnimation(strip, color, duration=args.pvel, steps=40)
                     else:
                         colorWipe(strip, color)
                     break
             else:
                 complex_args = ['universe', 'galaxy', 'uranium', 'hellsgate', 'scientist', 'raspberry', 'mcportal']
+                complex_found = False  # Variable de control para indicar si se encontró un complex_arg válido
+
                 for complex_arg in complex_args:
                     if getattr(args, f'complex_{complex_arg}'):
                         complex_func = {
@@ -427,20 +484,35 @@ try:
                             'mcportal': cyclemcportal
                         }[complex_arg]
                         if args.pulsate:
-                            print(f"!!! --complex_{complex_arg} flag doesn't accept --pulsate requests")
+                            print(f"!!! --complex_{complex_arg} flag doesn't accept --pulsate requests, running --circle instead...")
                             print("")
+                            complex_found = True  # Establecer la variable de control en True para indicar una coincidencia
+                            break
+                        elif args.rotate:
+                            print(f"!!! --complex_{complex_arg} flag doesn't accept --rotate requests, running --circle instead...")
+                            print("")
+                            complex_found = True  # Establecer la variable de control en True para indicar una coincidencia
+                            break
                         else:
                             wait_ms_dict = {
-                                'universe': 20,
-                                'galaxy': 40,
-                                'uranium': 40,
+                                'universe': 50,
+                                'galaxy': 50,
+                                'uranium': 50,
                                 'hellsgate': 100,
                                 'scientist': 75,
-                                'raspberry': 25,
-                                'mcportal': 150
+                                'raspberry': 100,
+                                'mcportal': 250
                             }
                             complex_func(strip, wait_ms=wait_ms_dict.get(complex_arg, 20), iterations=5)
-                        break
+                            complex_found = True  # Establecer la variable de control en True para indicar una coincidencia
+                            break
+
+                # Verificar si se encontró una coincidencia y si no, mostrar un mensaje de error
+                if not complex_found:
+                    rainbow(strip, wait_ms=20, iterations=1)
+                    time.sleep(1)
+                    rainbowCycle(strip, wait_ms=20, iterations=5)
+                    time.sleep(1)
                 else:
                     # If no specific color flag is provided, run a sequence of default animations
                     animations = [
